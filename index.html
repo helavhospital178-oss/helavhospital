@@ -1,0 +1,706 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Premier private hospital in Soran offering advanced medical services with compassion and innovation.">
+    <title data-i18n="title">Helav Hospital | Soran</title>
+    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@300;400;600;700&family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+    <style>
+        :root {
+            --primary: #00d4ff;
+            --primary-dark: #01579b;
+            --light: #e6f9ff;
+            --dark: #001f3f;
+            --bg: var(--light);
+            --text: #001f3f;
+            --card-bg: white;
+            --accent: #b3e5fc;
+        }
+        [data-theme="dark"] {
+            --bg: #0a192f;
+            --text: #e0fbfc;
+            --card-bg: #1e3a8a;
+            --primary: #4dd0e1;
+            --accent: #334155;
+        }
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+        body {
+            font-family: 'Cairo', sans-serif;
+            line-height: 1.8;
+            color: var(--text);
+            background: var(--bg);
+            transition: background 0.3s, color 0.3s;
+            font-size: 1.1rem;
+        }
+        h1, h2, h3 { font-family: 'Poppins', sans-serif; font-weight: 700; }
+        nav {
+            position: fixed;
+            top: 0;
+            width: 100%;
+            background: white;
+            padding: 15px 40px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            z-index: 1000;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.05);
+            border-bottom-left-radius: 20px;
+            border-bottom-right-radius: 20px;
+            transition: background 0.3s;
+        }
+        [data-theme="dark"] nav { background: var(--card-bg); }
+        .logo-img { height: 65px; transition: all 0.4s ease; }
+        .logo-img:hover { transform: scale(1.15) rotate(8deg); filter: drop-shadow(0 5px 15px rgba(0,180,216,0.5)); }
+        .nav-box {
+            background: var(--primary);
+            color: white;
+            text-decoration: none;
+            margin: 0 10px;
+            font-weight: 600;
+            transition: all 0.3s;
+            font-size: 1.1rem;
+            padding: 12px 28px;
+            border-radius: 50px;
+            box-shadow: 0 4px 12px rgba(0,180,216,0.3);
+        }
+        .nav-box:hover {
+            background: var(--primary-dark);
+            transform: translateY(-4px);
+            box-shadow: 0 8px 25px rgba(1,87,155,0.4);
+        }
+        .theme-toggle { background: none; border: none; color: var(--primary-dark); font-size: 1.6rem; cursor: pointer; transition: transform 0.3s; }
+        .theme-toggle:hover { transform: rotate(20deg); }
+        .nav-left { display: flex; align-items: center; gap: 15px; }
+        .nav-right { display: flex; align-items: center; }
+        .menu-icon { display: none; font-size: 2rem; color: var(--primary-dark); cursor: pointer; transition: all 0.3s; margin-right: 15px; }
+        .nav-links { display: flex; align-items: center; }
+        #language-select {
+            padding: 10px 20px;
+            border-radius: 50px;
+            border: 1px solid var(--primary);
+            background: var(--card-bg);
+            color: var(--text);
+            font-size: 1rem;
+            cursor: pointer;
+            margin-left: 15px;
+        }
+        header {
+            background-image: url('https://i.ibb.co/yn3YS2FY/hospital-png.jpg');
+            background-size: cover;
+            background-position: center;
+            color: white;
+            text-align: center;
+            padding: 220px 20px 140px;
+            position: relative;
+            min-height: 90vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        header::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(to bottom, rgba(0, 87, 155, 0.65), rgba(0, 212, 255, 0.25));
+            z-index: 0;
+        }
+        header .content {
+            position: relative;
+            z-index: 1;
+            max-width: 1100px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 35px;
+        }
+        header h1 {
+            font-size: 8rem;
+            margin: 0;
+            font-weight: 900;
+            color: #ffffff;
+            text-shadow: 0 10px 40px rgba(0,0,0,0.9), 0 0 35px rgba(0,0,0,0.7), 0 0 60px rgba(0,180,216,0.5);
+            animation: zoomIn 1.8s ease-out, glowPulse 5s infinite alternate;
+            letter-spacing: -3px;
+        }
+        header p {
+            font-size: 2.4rem;
+            max-width: 1000px;
+            margin: 0;
+            font-weight: 500;
+            color: #ffffff;
+            text-shadow: 0 6px 25px rgba(0,0,0,0.95), 0 0 20px rgba(0,0,0,0.8), 0 0 40px rgba(0,180,216,0.4);
+            animation: fadeIn 2.5s ease-out 0.7s forwards;
+            opacity: 0;
+            line-height: 1.45;
+        }
+        @keyframes glowPulse {
+            from { text-shadow: 0 10px 40px rgba(0,0,0,0.7), 0 0 30px rgba(0,212,255,0.6); }
+            to   { text-shadow: 0 15px 55px rgba(0,0,0,0.8), 0 0 50px rgba(0,212,255,0.9); }
+        }
+        @keyframes zoomIn {
+            from { transform: scale(0.7); opacity: 0; }
+            to   { transform: scale(1); opacity: 1; }
+        }
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(40px); }
+            to   { opacity: 1; transform: translateY(0); }
+        }
+        section { padding: 100px 20px; max-width: 1300px; margin: 0 auto; }
+        h2 {
+            color: var(--primary);
+            text-align: center;
+            margin-bottom: 60px;
+            font-size: 3.5rem;
+            position: relative;
+        }
+        h2::after { 
+            content: ''; display: block; width: 140px; height: 6px; 
+            background: linear-gradient(90deg, var(--primary), var(--primary-dark)); 
+            margin: 25px auto 0; border-radius: 3px; 
+        }
+        .grid { 
+            display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap: 50px; 
+        }
+        .card {
+            background: var(--card-bg);
+            border-radius: 25px;
+            overflow: hidden;
+            box-shadow: 0 12px 35px rgba(0,0,0,0.08);
+            transition: all 0.4s;
+            text-align: center;
+            padding: 50px 30px;
+            min-height: 420px;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+        }
+        .card:hover { transform: translateY(-12px); box-shadow: 0 25px 60px rgba(0,0,0,0.18); }
+        .card i { font-size: 5rem; color: var(--primary); margin-bottom: 35px; transition: all 0.4s; }
+        .card:hover i { color: var(--primary-dark); transform: scale(1.15); }
+        .team-card img {
+            width: 200px;
+            height: 200px;
+            border-radius: 50%;
+            object-fit: cover;
+            margin: 0 auto 20px auto;
+            border: 6px solid var(--primary);
+            box-shadow: 0 8px 30px rgba(0,0,0,0.3);
+            transition: all 0.4s ease;
+        }
+        .team-card:hover img { transform: scale(1.12); border-color: var(--primary-dark); }
+        .contact-form {
+            max-width: 800px; margin: 0 auto 80px; background: var(--card-bg); padding: 55px;
+            border-radius: 25px; box-shadow: 0 15px 40px rgba(0,0,0,0.1);
+        }
+        input, textarea {
+            width: 100%; padding: 18px; margin: 16px 0; border: 1px solid #e0e0e0;
+            border-radius: 12px; font-size: 1.1rem; background: var(--card-bg); color: var(--text);
+            transition: all 0.3s;
+        }
+        input:focus, textarea:focus { border-color: var(--primary); box-shadow: 0 0 15px rgba(0,212,255,0.3); outline: none; }
+        button {
+            background: var(--primary); color: white; border: none; padding: 18px 40px;
+            border-radius: 50px; cursor: pointer; font-size: 1.3rem; transition: all 0.3s;
+        }
+        button:hover { background: var(--primary-dark); transform: translateY(-4px); box-shadow: 0 10px 30px rgba(1,87,155,0.4); }
+        .map iframe { border-radius: 25px; box-shadow: 0 15px 40px rgba(0,0,0,0.1); width: 100%; height: 550px; }
+        footer {
+            background: var(--primary-dark); color: white; text-align: center; padding: 60px 20px;
+        }
+        .social-icons { display: flex; justify-content: center; margin: 20px 0; }
+        .social-icons a { color: white; font-size: 2.2rem; margin: 0 20px; transition: all 0.3s; }
+        .social-icons a:hover { color: var(--primary); transform: translateY(-6px); }
+        #back-to-top {
+            position: fixed; bottom: 40px; right: 40px; background: var(--primary);
+            color: white; width: 65px; height: 65px; border-radius: 50%; display: none;
+            align-items: center; justify-content: center; cursor: pointer; font-size: 1.9rem;
+            z-index: 1000; box-shadow: 0 8px 25px rgba(0,0,0,0.3);
+        }
+        #back-to-top:hover { opacity: 0.9; }
+        [dir="rtl"] {
+            text-align: right;
+        }
+        [dir="rtl"] h2 { text-align: center; }
+        [dir="rtl"] .grid { direction: rtl; }
+        [dir="rtl"] .nav-left, [dir="rtl"] .nav-right, [dir="rtl"] .nav-links, [dir="rtl"] .social-icons {
+            flex-direction: row-reverse;
+        }
+        @media (max-width: 768px) {
+            header { padding: 160px 20px 100px; }
+            header h1 { font-size: 5rem; }
+            header p { font-size: 1.7rem; }
+            nav { padding: 15px 25px; }
+            .nav-links {
+                display: none;
+                flex-direction: column;
+                position: absolute;
+                top: 100%;
+                left: 0;
+                width: 100%;
+                background: white;
+                padding: 20px 0;
+                box-shadow: 0 4px 20px rgba(0,0,0,0.05);
+                z-index: 999;
+            }
+            [data-theme="dark"] .nav-links { background: var(--card-bg); }
+            .nav-links.active { display: flex; }
+            .nav-links .nav-box { margin: 10px auto; width: 80%; text-align: center; }
+            .menu-icon { display: block; }
+            h2 { font-size: 2.8rem; }
+            .card i { font-size: 4.5rem; }
+        }
+    </style>
+</head>
+<body data-aos="fade">
+
+    <nav>
+        <div class="nav-left">
+            <img src="https://i.ibb.co/GQV9TmHq/365473239-285628617385815-3593526770597190920-n.jpg" alt="Helav Hospital Logo" class="logo-img" data-i18n-alt="logo_alt">  
+            <button class="theme-toggle" id="theme-toggle"><i class="fas fa-moon"></i></button>
+            <select id="language-select">
+                <option value="en">English</option>
+                <option value="ar">العربية</option>
+                <option value="ku">کوردی</option>
+            </select>
+        </div>
+        <div class="nav-right">
+            <div class="menu-icon"><i class="fas fa-bars"></i></div>
+            <div class="nav-links">
+                <a href="#about" class="nav-box" data-i18n="nav_about">About</a>
+                <a href="#services" class="nav-box" data-i18n="nav_services">Services</a>
+                <a href="#team" class="nav-box" data-i18n="nav_team">Team</a>
+                <a href="#contact" class="nav-box" data-i18n="nav_contact">Contact</a>
+            </div>
+        </div>
+    </nav>
+
+    <header id="home">
+        <div class="content" data-aos="zoom-in" data-aos-duration="1400">
+            <h1 data-i18n="header_h1">Helav Hospital</h1>
+            <p data-i18n="header_p">Delivering Exceptional Healthcare in Soran with Unmatched Compassion, Innovation, and Excellence Around the Clock</p>
+        </div>
+    </header>
+
+    <section id="about" data-aos="fade-up">
+        <h2 data-i18n="about_h2">About Us</h2>
+        <p style="max-width: 900px; margin: 0 auto; text-align: center; font-size: 1.4rem; line-height: 1.9;" data-i18n="about_p">
+            At Helav Hospital, we stand as the premier private healthcare provider in Soran, dedicated to offering cutting-edge medical services tailored to your needs. Our state-of-the-art facilities, combined with a team of highly skilled specialists, ensure that you receive personalized, affordable, and empathetic care that prioritizes your well-being above all.
+        </p>
+    </section>
+
+    <section id="services" style="background: var(--accent);" data-aos="fade-up">
+        <h2 data-i18n="services_h2">Our Comprehensive Services</h2>
+        <div class="grid">
+            <div class="card" data-aos="zoom-in" data-aos-delay="100">
+                <i class="fas fa-ambulance"></i>
+                <h3 data-i18n="emergency_h3">Emergency Care</h3>
+                <p data-i18n="emergency_p">Round-the-clock emergency services equipped with rapid response teams and cutting-edge medical technology to handle any crisis effectively.</p>
+            </div>
+            <div class="card" data-aos="zoom-in" data-aos-delay="200">
+                <i class="fas fa-heartbeat"></i>
+                <h3 data-i18n="cardiology_h3">Cardiology</h3>
+                <p data-i18n="cardiology_p">Specialized heart care including advanced diagnostics, treatments, and preventive measures delivered by expert cardiologists.</p>
+            </div>
+            <div class="card" data-aos="zoom-in" data-aos-delay="300">
+                <i class="fas fa-user-md"></i>
+                <h3 data-i18n="surgery_h3">Surgery</h3>
+                <p data-i18n="surgery_p">State-of-the-art surgical procedures performed in modern operating theaters by experienced surgeons.</p>
+            </div>
+            <div class="card" data-aos="zoom-in" data-aos-delay="400">
+                <i class="fas fa-child"></i>
+                <h3 data-i18n="pediatrics_h3">Pediatrics</h3>
+                <p data-i18n="pediatrics_p">Compassionate and specialized care for infants, children, and adolescents, ensuring their health and development.</p>
+            </div>
+            <div class="card" data-aos="zoom-in" data-aos-delay="500">
+                <i class="fas fa-tooth"></i>
+                <h3 data-i18n="dentistry_h3">Dentistry Clinic</h3>
+                <p data-i18n="dentistry_p">Comprehensive dental care including check-ups, treatments, and cosmetic services with experienced professionals for healthy smiles.</p>
+            </div>
+            <div class="card" data-aos="zoom-in" data-aos-delay="600">
+                <i class="fas fa-flask"></i>
+                <h3 data-i18n="lab_h3">Laboratory Services</h3>
+                <p data-i18n="lab_p">Reliable and swift diagnostic testing with the latest equipment for accurate results.</p>
+            </div>
+            <div class="card" data-aos="zoom-in" data-aos-delay="650">
+                <i class="fas fa-stethoscope"></i>
+                <h3 data-i18n="ultrasound_h3">Ultrasound</h3>
+                <p data-i18n="ultrasound_p">Advanced ultrasound imaging for accurate diagnostics in obstetrics, abdominal, vascular, and other specialties, performed with modern equipment and expert care.</p>
+            </div>
+            <div class="card" data-aos="zoom-in" data-aos-delay="675">
+                <i class="fas fa-bed"></i>
+                <h3 data-i18n="labor_h3">Labor Ward</h3>
+                <p data-i18n="labor_p">Comfortable, modern labor and delivery facilities with 24/7 monitoring, pain management options, and dedicated support for safe and personalized childbirth experiences.</p>
+            </div>
+            <div class="card" data-aos="zoom-in" data-aos-delay="800">
+                <i class="fas fa-shield-alt"></i>
+                <h3 data-i18n="insurance_h3">Insurance Services</h3>
+                <p data-i18n="insurance_p">We are a proud provider for Starkar Health Insurance in Soran. Patients with Starkar coverage can receive seamless, high-quality care. Mr. Khatam Ahmed personally handles all insurance matters—from verification and claims to ensuring a smooth, hassle-free experience for every visit. Contact us to learn more about your benefits!</p>
+            </div>
+        </div>
+    </section>
+
+    <section id="team" data-aos="fade-up">
+        <h2 data-i18n="team_h2">Meet Our Expert Team</h2>
+        <div class="grid">
+            <div class="card team-card" data-aos="flip-left">
+                <img src="https://i.ibb.co/5VKSp4X/doctor1-jpeg.jpg" alt="Dr. Husen Mahmood Mohamed" data-i18n-alt="dr_husen_alt">
+                <h3 data-i18n="dr_husen_h3">Dr. Husen Mahmood Mohamed</h3>
+                <p data-i18n="dr_husen_p">Renowned Dermatologist with over 15 years of experience in skin health and treatments.</p>
+            </div>
+            <div class="card team-card" data-aos="flip-left" data-aos-delay="100">
+                <img src="https://i.ibb.co/6JsqCKh0/doctor4-jpeg.jpg" alt="Dr. Radhia Tofiq Nanakali" data-i18n-alt="dr_radhia_alt">
+                <h3 data-i18n="dr_radhia_h3">Dr. Radhia Tofiq Nanakali</h3>
+                <p data-i18n="dr_radhia_p">Expert Gynecologist dedicated to women's health and wellness.</p>
+            </div>
+            <div class="card team-card" data-aos="flip-left" data-aos-delay="200">
+                <img src="https://i.ibb.co/G35BGj3b/doctor3-jpeg.jpg" alt="Dr. Star Saleem" data-i18n-alt="dr_star_alt">
+                <h3 data-i18n="dr_star_h3">Dr. Star Saleem</h3>
+                <p data-i18n="dr_star_p">Skilled Surgeon specializing in minimally invasive procedures.</p>
+            </div>
+            <div class="card team-card" data-aos="flip-left" data-aos-delay="200">
+                <img src="https://i.ibb.co/6JVmXK0z/doctor5.jpg" alt="Dr. Farhad Rashid Karim" data-i18n-alt="dr_farhad_alt">
+                <h3 data-i18n="dr_farhad_h3">Dr. Farhad Rashid Karim</h3>
+                <p data-i18n="dr_farhad_p">Skilled Surgeon specializing in minimally invasive procedures.</p>
+            </div>
+            <div class="card team-card" data-aos="flip-left" data-aos-delay="300">
+                <img src="https://i.ibb.co/HDMDw8sv/doctor2-jpeg.jpg" alt="Dr. Rebaz Ahmed Omer" data-i18n-alt="dr_rebaz_alt">
+                <h3 data-i18n="dr_rebaz_h3">Dr. Rebaz Ahmed Omer</h3>
+                <p data-i18n="dr_rebaz_p">Compassionate Pediatrician focused on child health and development.</p>
+            </div>
+            <div class="card team-card" data-aos="flip-left" data-aos-delay="200">
+                <img src="https://i.ibb.co/Q3LDLZFL/Whats-App-Image-2026-02-04-at-4-47-12-PM.jpg" alt="Dr. Wshiar Sadradin Hars" data-i18n-alt="dr_wshiar_alt">
+                <h3 data-i18n="dr_wshiar_h3">Dr. Wshiar Sadradin Hars</h3>
+                <p data-i18n="dr_wshiar_p">Board Certified in Internal Medicine, Cardiology, Respiratory Medicine, Diabetes and Endocrinology.</p>
+            </div>
+            <div class="card team-card" data-aos="flip-left" data-aos-delay="400">
+                <img src="https://i.ibb.co/VYNLhL7y/Dr6.jpg" alt="Dr. Abdulsallam Khalid Omar" data-i18n-alt="dr_abdulsallam_alt">
+                <h3 data-i18n="dr_abdulsallam_h3">Dr. Abdulsallam Khalid Omar</h3>
+                <p data-i18n="dr_abdulsallam_p">Experienced Dentist providing comprehensive oral care, from routine check-ups to advanced dental treatments.</p>
+            </div>
+            <div class="card team-card" data-aos="flip-left" data-aos-delay="500">
+                <img src="https://i.ibb.co/ZRRYXDMH/dr7.jpg" alt="Dr. Bahnaz Khwaja Nabi" data-i18n-alt="dr_bahnaz_alt">
+                <h3 data-i18n="dr_bahnaz_h3">Dr. Bahnaz Khwaja Nabi</h3>
+                <p data-i18n="dr_bahnaz_p">Female Ultrasound Specialist dedicated to precise diagnostic imaging and women's health ultrasound services.</p>
+            </div>
+        </div>
+    </section>
+
+    <section id="contact" style="background: var(--light);" data-aos="fade-up">
+        <h2 data-i18n="contact_h2">Get in Touch & Book Your Appointment</h2>
+        <div style="text-align: center; font-size: 1.4rem; margin: 0 auto 45px; max-width: 900px;" data-i18n="contact_intro">
+            <p>We're here to serve you. Reach out for any inquiries or to schedule your visit.</p>
+            <p>Address: General St, Soran</p>
+            <p>Phone: <a href="tel:+9647507747989">+964 750 774 7989</a></p>
+            <p>Email: <a href="mailto:helav.hospital@gmail.com">helav.hospital@gmail.com</a></p>
+        </div>
+
+        <div class="contact-form">
+            <form id="contact-form" action="mailto:helav.hospital@gmail.com" method="post" enctype="text/plain">
+                <label for="name" data-i18n="name_label">Your Name</label>
+                <input type="text" id="name" name="Name" required data-i18n-placeholder="name_placeholder">
+
+                <label for="email" data-i18n="email_label">Your Email</label>
+                <input type="email" id="email" name="Email" required data-i18n-placeholder="email_placeholder">
+
+                <label for="phone" data-i18n="phone_label">Your Phone</label>
+                <input type="tel" id="phone" name="Phone" data-i18n-placeholder="phone_placeholder">
+
+                <label for="message" data-i18n="message_label">Your Message or Appointment Details</label>
+                <textarea id="message" name="Message" rows="5" required data-i18n-placeholder="message_placeholder"></textarea>
+
+                <button type="submit" data-i18n="submit_btn">Submit & Book</button>
+            </form>
+        </div>
+
+        <div class="map" style="text-align: center;">
+            <iframe width="100%" height="550" style="border:0;" allowfullscreen="" loading="lazy" 
+                src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3174.0!2d44.5326!3d36.65407!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x40002a5c00000001%3A0x5f0a0d525a988a0a!2sHelav%20Private%20Hospital!5e0!3m2!1sen!2siq!4v1706445900000"></iframe>
+        </div>
+    </section>
+
+    <footer>
+        <p data-i18n="footer_copyright">© 2026 Helav Hospital. All Rights Reserved.</p>
+        <p data-i18n="footer_hours">Available 24/7 for Emergencies | Operating Hours: Saturday–Thursday, 8AM–8PM</p>
+        <div class="social-icons">
+            <a href="https://www.facebook.com/Helav.hospital" target="_blank"><i class="fab fa-facebook"></i></a>
+            <a href="https://www.instagram.com/helav.hospital" target="_blank"><i class="fab fa-instagram"></i></a>
+            <a href="https://linktr.ee/helav_hospital" target="_blank"><i class="fas fa-link"></i></a>
+        </div>
+        <p data-i18n="footer_designed">Designed by KHATAM AHMED</p>
+    </footer>
+
+    <div id="back-to-top"><i class="fas fa-arrow-up"></i></div>
+
+    <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+    <script>
+        AOS.init({ duration: 1200, once: true });
+
+        const translations = {
+            en: {
+                title: "Helav Hospital | Soran",
+                logo_alt: "Helav Hospital Logo, a modern medical emblem",
+                nav_about: "About",
+                nav_services: "Services",
+                nav_team: "Team",
+                nav_contact: "Contact",
+                header_h1: "Helav Hospital",
+                header_p: "Delivering Exceptional Healthcare in Soran with Unmatched Compassion, Innovation, and Excellence Around the Clock",
+                about_h2: "About Us",
+                about_p: "At Helav Hospital, we stand as the premier private healthcare provider in Soran, dedicated to offering cutting-edge medical services tailored to your needs. Our state-of-the-art facilities, combined with a team of highly skilled specialists, ensure that you receive personalized, affordable, and empathetic care that prioritizes your well-being above all.",
+                services_h2: "Our Comprehensive Services",
+                emergency_h3: "Emergency Care",
+                emergency_p: "Round-the-clock emergency services equipped with rapid response teams and cutting-edge medical technology to handle any crisis effectively.",
+                cardiology_h3: "Cardiology",
+                cardiology_p: "Specialized heart care including advanced diagnostics, treatments, and preventive measures delivered by expert cardiologists.",
+                surgery_h3: "Surgery",
+                surgery_p: "State-of-the-art surgical procedures performed in modern operating theaters by experienced surgeons.",
+                pediatrics_h3: "Pediatrics",
+                pediatrics_p: "Compassionate and specialized care for infants, children, and adolescents, ensuring their health and development.",
+                dentistry_h3: "Dentistry Clinic",
+                dentistry_p: "Comprehensive dental care including check-ups, treatments, and cosmetic services with experienced professionals for healthy smiles.",
+                lab_h3: "Laboratory Services",
+                lab_p: "Reliable and swift diagnostic testing with the latest equipment for accurate results.",
+                ultrasound_h3: "Ultrasound",
+                ultrasound_p: "Advanced ultrasound imaging for accurate diagnostics in obstetrics, abdominal, vascular, and other specialties, performed with modern equipment and expert care.",
+                labor_h3: "Labor Ward",
+                labor_p: "Comfortable, modern labor and delivery facilities with 24/7 monitoring, pain management options, and dedicated support for safe and personalized childbirth experiences.",
+                insurance_h3: "Insurance Services",
+                insurance_p: "We are a proud provider for Starkar Health Insurance in Soran. Patients with Starkar coverage can receive seamless, high-quality care. Mr. Khatam Ahmed personally handles all insurance matters—from verification and claims to ensuring a smooth, hassle-free experience for every visit. Contact us to learn more about your benefits!",
+                team_h2: "Meet Our Expert Team",
+                dr_husen_h3: "Dr. Husen Mahmood Mohamed",
+                dr_husen_p: "Renowned Dermatologist with over 15 years of experience in skin health and treatments.",
+                dr_husen_alt: "Dr. Husen Mahmood Mohamed, Renowned Dermatologist",
+                dr_radhia_h3: "Dr. Radhia Tofiq Nanakali",
+                dr_radhia_p: "Expert Gynecologist dedicated to women's health and wellness.",
+                dr_radhia_alt: "Dr. Radhia Tofiq Nanakali, Expert Gynecologist",
+                dr_star_h3: "Dr. Star Saleem",
+                dr_star_p: "Skilled Surgeon specializing in minimally invasive procedures.",
+                dr_star_alt: "Dr. Star Saleem, Skilled Surgeon",
+                dr_farhad_h3: "Dr. Farhad Rashid Karim",
+                dr_farhad_p: "Skilled Surgeon specializing in minimally invasive procedures.",
+                dr_farhad_alt: "Dr. Farhad Rashid Karim, Skilled Surgeon",
+                dr_rebaz_h3: "Dr. Rebaz Ahmed Omer",
+                dr_rebaz_p: "Compassionate Pediatrician focused on child health and development.",
+                dr_rebaz_alt: "Dr. Rebaz Ahmed Omer, Compassionate Pediatrician",
+                dr_wshiar_h3: "Dr. Wshiar Sadradin Hars",
+                dr_wshiar_p: "Board Certified in Internal Medicine, Cardiology, Respiratory Medicine, Diabetes and Endocrinology.",
+                dr_wshiar_alt: "Dr. Wshiar Sadradin Hars, Cardiologist",
+                dr_abdulsallam_h3: "Dr. Abdulsallam Khalid Omar",
+                dr_abdulsallam_p: "Experienced Dentist providing comprehensive oral care, from routine check-ups to advanced dental treatments.",
+                dr_abdulsallam_alt: "Dr. Abdulsallam Khalid Omar, Experienced Dentist",
+                dr_bahnaz_h3: "Dr. Bahnaz Khwaja Nabi",
+                dr_bahnaz_p: "Female Ultrasound Specialist dedicated to precise diagnostic imaging and women's health ultrasound services.",
+                dr_bahnaz_alt: "Dr. Bahnaz Khwaja Nabi, Ultrasound Specialist",
+                contact_h2: "Get in Touch & Book Your Appointment",
+                contact_intro: "We're here to serve you. Reach out for any inquiries or to schedule your visit.<br>Address: General St, Soran<br>Phone: <a href=\"tel:+9647507747989\">+964 750 774 7989</a><br>Email: <a href=\"mailto:helav.hospital@gmail.com\">helav.hospital@gmail.com</a>",
+                name_label: "Your Name",
+                name_placeholder: "Your Name",
+                email_label: "Your Email",
+                email_placeholder: "Your Email",
+                phone_label: "Your Phone",
+                phone_placeholder: "Your Phone",
+                message_label: "Your Message or Appointment Details",
+                message_placeholder: "Your Message or Appointment Details (e.g., Preferred Doctor, Date & Time)",
+                submit_btn: "Submit & Book",
+                footer_copyright: "© 2026 Helav Hospital. All Rights Reserved.",
+                footer_hours: "Available 24/7 for Emergencies | Operating Hours: Saturday–Thursday, 8AM–8PM",
+                footer_designed: "Designed by KHATAM AHMED"
+            },
+            ar: {
+                title: "مستشفى هلاف | سوران",
+                logo_alt: "شعار مستشفى هلاف، رمز طبي حديث",
+                nav_about: "من نحن",
+                nav_services: "الخدمات",
+                nav_team: "الفريق الطبي",
+                nav_contact: "اتصل بنا",
+                header_h1: "مستشفى هلاف",
+                header_p: "تقديم رعاية صحية استثنائية في سوران مع الرحمة والابتكار والتميز على مدار الساعة",
+                about_h2: "من نحن",
+                about_p: "في مستشفى هلاف، نعتبر المزود الرائد للرعاية الصحية الخاصة في سوران، ملتزمون بتقديم خدمات طبية متطورة مصممة حسب احتياجاتكم...",
+                services_h2: "خدماتنا الشاملة",
+                emergency_h3: "الرعاية الطارئة",
+                emergency_p: "خدمات طوارئ على مدار الساعة مزودة بفرق استجابة سريعة وتقنيات طبية متطورة...",
+                cardiology_h3: "أمراض القلب",
+                cardiology_p: "رعاية قلبية متخصصة تشمل التشخيص المتقدم والعلاجات والإجراءات الوقائية...",
+                surgery_h3: "الجراحة",
+                surgery_p: "إجراءات جراحية متطورة تُنفذ في غرف عمليات حديثة بواسطة جراحين ذوي خبرة...",
+                pediatrics_h3: "طب الأطفال",
+                pediatrics_p: "رعاية محببة ومتخصصة للرضع والأطفال والمراهقين...",
+                dentistry_h3: "عيادة الأسنان",
+                dentistry_p: "رعاية أسنان شاملة تشمل الفحوصات والعلاجات والخدمات التجميلية...",
+                lab_h3: "خدمات المختبر",
+                lab_p: "اختبارات تشخيصية موثوقة وسريعة باستخدام أحدث المعدات...",
+                ultrasound_h3: "التصوير بالموجات فوق الصوتية",
+                ultrasound_p: "تصوير بالموجات فوق الصوتية متقدم للتشخيص الدقيق في التوليد والبطن والأوعية الدموية...",
+                labor_h3: "جناح الولادة",
+                labor_p: "مرافق ولادة مريحة وحديثة مع مراقبة 24/7 وخيارات إدارة الألم...",
+                insurance_h3: "خدمات التأمين",
+                insurance_p: "نحن مزود فخور لتأمين ستاركار الصحي في سوران...",
+                team_h2: "تعرف على فريقنا الخبير",
+                dr_husen_h3: "د. حسين محمود محمد",
+                dr_husen_p: "أخصائي أمراض جلدية مشهور بخبرة تزيد عن 15 عاماً...",
+                dr_radhia_h3: "د. راضية توفيق نانكلي",
+                dr_radhia_p: "أخصائية نسائية مكرسة لصحة ورفاهية المرأة...",
+                dr_star_h3: "د. ستار سليم",
+                dr_star_p: "جراح ماهر متخصص في الإجراءات طفيفة التوغل...",
+                dr_farhad_h3: "د. فرهاد رشيد كريم",
+                dr_farhad_p: "جراح ماهر متخصص في الإجراءات طفيفة التوغل...",
+                dr_rebaz_h3: "د. ريباز أحمد عمر",
+                dr_rebaz_p: "طبيب أطفال رحيم يركز على صحة ونمو الطفل...",
+                dr_wshiar_h3: "د. وشيار صدرالدين حارس",
+                dr_wshiar_p: "معتمد في الطب الباطني، أمراض القلب، الجهاز التنفسي، السكري والغدد الصماء...",
+                dr_abdulsallam_h3: "د. عبد السلام خالد عمر",
+                dr_abdulsallam_p: "طبيب أسنان متمرس يقدم رعاية فموية شاملة...",
+                dr_bahnaz_h3: "د. بهناز خواجة نبي",
+                dr_bahnaz_p: "أخصائية تصوير بالموجات فوق الصوتية (أنثى) مكرسة للتصوير الدقيق وصحة المرأة...",
+                contact_h2: "تواصلوا معنا واحجزوا موعدكم",
+                contact_intro: "نحن هنا لخدمتكم. تواصلوا معنا لأي استفسار أو لحجز زيارتكم.<br>العنوان: شارع عام، سوران<br>الهاتف: <a href=\"tel:+9647507747989\">+964 750 774 7989</a><br>البريد: <a href=\"mailto:helav.hospital@gmail.com\">helav.hospital@gmail.com</a>",
+                name_label: "اسمك",
+                name_placeholder: "اسمك",
+                email_label: "بريدك الإلكتروني",
+                email_placeholder: "بريدك الإلكتروني",
+                phone_label: "هاتفك",
+                phone_placeholder: "هاتفك",
+                message_label: "رسالتك أو تفاصيل الموعد",
+                message_placeholder: "رسالتك أو تفاصيل الموعد (مثال: الطبيب المفضل، التاريخ والوقت)",
+                submit_btn: "إرسال وحجز",
+                footer_copyright: "© 2026 مستشفى هلاف. جميع الحقوق محفوظة.",
+                footer_hours: "متوفر 24/7 للطوارئ | ساعات العمل: السبت–الخميس، 8 صباحاً–8 مساءً",
+                footer_designed: "تصميم: خاتەم أحمد"
+            },
+            ku: {
+                title: "نەخۆشخانەی هێلاڤ | سۆران",
+                logo_alt: "لۆگۆی نەخۆشخانەی هێلاڤ",
+                nav_about: "دەربارەی ئێمە",
+                nav_services: "خزمەتگوزارییەکان",
+                nav_team: "تیم",
+                nav_contact: "پەیوەندی",
+                header_h1: "نەخۆشخانەی هێلاڤ",
+                header_p: "پێشکەشکردنی چاودێری تەندروستی ناوازە لە سۆران بە بەزەیی و نوێگەری و پلەبەرزی 24 کاتژمێر",
+                about_h2: "دەربارەی ئێمە",
+                about_p: "لە نەخۆشخانەی هێلاڤ، وەک باشترین دابینکەری چاودێری تەندروستی تایبەت لە سۆران دەستنیشان دەکرێین...",
+                services_h2: "خزمەتگوزارییەکانی ئێمە",
+                emergency_h3: "چاودێری فوری",
+                emergency_p: "خزمەتگوزارییەکانی فوری 24 کاتژمێر بە تیمە خێراکان و تەکنەلۆژیای پێشکەوتوو...",
+                cardiology_h3: "دڵ",
+                cardiology_p: "چاودێری دڵی پسپۆڕانە لەگەڵ دیاگنۆز و چارەسەر و ڕێگری...",
+                surgery_h3: "نەشتەرگەری",
+                surgery_p: "نەشتەرگەرییە پێشکەوتووەکان لە ژوورە نوێیەکاندا...",
+                pediatrics_h3: "پزشکی منداڵان",
+                pediatrics_p: "چاودێری دڵسۆزانە بۆ منداڵان و گەورەبوون...",
+                dentistry_h3: "کلینیکی ددان",
+                dentistry_p: "چاودێری ددانی تەواو لە پشکنینەوە تا چارەسەری پێشکەوتوو...",
+                lab_h3: "خزمەتگوزارییەکانی تاقیگە",
+                lab_p: "تاقیکردنەوەی دیاگنۆستیکی خێرا و باوەڕپێکراو...",
+                ultrasound_h3: "سۆنەر",
+                ultrasound_p: "وێنەگرتنی پێشکەوتووی سۆنەر بۆ دیاگنۆستیکی ورد...",
+                labor_h3: "بەشی منداڵبوون",
+                labor_p: "ژینگەی منداڵبوونی نوێ و ئاسوودە بە چاودێری 24/7...",
+                insurance_h3: "خزمەتگوزارییەکانی بیمه",
+                insurance_p: "ئێمە بە شانازییەوە دابینکەری بیمه‌ی ستارکارین لە سۆران...",
+                team_h2: "تیمە شارەزایەکەمان بناسە",
+                dr_husen_h3: "دکتۆر حسێن مەحمود محەمەد",
+                dr_husen_p: "پسپۆڕی پێست بە زیاتر لە 15 ساڵ ئەزموون...",
+                dr_radhia_h3: "دکتۆر راضیه توفیق نەنەکەلی",
+                dr_radhia_p: "پسپۆڕی ژنان و زگماک...",
+                dr_star_h3: "دکتۆر ستار سەلیم",
+                dr_star_p: "نەشتەرگەری شارەزا لە نەشتەرگەری کەم-تێپەڕ...",
+                dr_farhad_h3: "دکتۆر فەرهاد ڕەشید کەریم",
+                dr_farhad_p: "نەشتەرگەری شارەزا لە نەشتەرگەری کەم-تێپەڕ...",
+                dr_rebaz_h3: "دکتۆر ڕێباز ئەحمەد عومەر",
+                dr_rebaz_p: "پزشکی منداڵان دڵسۆز و سەرنج لە تەندروستی منداڵ...",
+                dr_wshiar_h3: "دکتۆر وشیار سەدرەدین حارس",
+                dr_wshiar_p: "بڕوانامەی پزیشکی ناوەکی، دڵ، هەناسە، شەکرە و هۆرمۆن...",
+                dr_abdulsallam_h3: "دکتۆر عەبدولسەلام خالد عومەر",
+                dr_abdulsallam_p: "دکتۆری ددان شارەزا لە پشکنینەوە تا چارەسەری پێشکەوتوو...",
+                dr_bahnaz_h3: "دکتۆر بەهناز خواجە نەبی",
+                dr_bahnaz_p: "پسپۆڕی سۆنەری ئافرەتان بۆ وێنەگرتنی ورد و تەندروستی ئافرەتان...",
+                contact_h2: "پەیوەندیمان پێوە بکە و کاتەکەت بکە",
+                contact_intro: "ئێمە لێرەین بۆ خزمەتکردنت. پەیوەندیمان پێوە بکە بۆ ھەر پرسیارێک یان بۆ کات دانان.<br>ناونیشان: شەقامی گشتی، سۆران<br>تەلەفۆن: <a href=\"tel:+9647507747989\">+964 750 774 7989</a><br>ئیمەیڵ: <a href=\"mailto:helav.hospital@gmail.com\">helav.hospital@gmail.com</a>",
+                name_label: "ناوت",
+                name_placeholder: "ناوت",
+                email_label: "ئیمەیڵەکەت",
+                email_placeholder: "ئیمەیڵەکەت",
+                phone_label: "ژمارەی تەلەفۆنت",
+                phone_placeholder: "ژمارەی تەلەفۆنت",
+                message_label: "پەیامەکەت یان وردەکاری کاتەکە",
+                message_placeholder: "پەیامەکەت یان وردەکاری کاتەکە (وەک: پزیشکی دڵخواز، بەروار و کات)",
+                submit_btn: "ناردن و کات دانان",
+                footer_copyright: "© 2026 نەخۆشخانەی هێلاڤ. ھەموو مافەکان پارێزراون.",
+                footer_hours: "24/7 بۆ فریاگوزاری | کاتی کار: شەممە–پێنجشەممە، 8ی بەیانی–8ی ئێوارە",
+                footer_designed: "دیزاین کراوە لە لایەن خاتەم ئەحمەد"
+            }
+        };
+
+        function setLanguage(lang) {
+            localStorage.setItem('language', lang);
+            document.documentElement.lang = lang;
+            document.documentElement.dir = (lang === 'en') ? 'ltr' : 'rtl';
+            document.title = translations[lang].title || document.title;
+
+            document.querySelectorAll('[data-i18n]').forEach(el => {
+                const key = el.getAttribute('data-i18n');
+                if (translations[lang][key]) el.innerHTML = translations[lang][key];
+            });
+
+            document.querySelectorAll('[data-i18n-placeholder]').forEach(el => {
+                const key = el.getAttribute('data-i18n-placeholder');
+                if (translations[lang][key]) el.placeholder = translations[lang][key];
+            });
+
+            document.querySelectorAll('[data-i18n-alt]').forEach(el => {
+                const key = el.getAttribute('data-i18n-alt');
+                if (translations[lang][key]) el.alt = translations[lang][key];
+            });
+        }
+
+        const savedLang = localStorage.getItem('language') || 'en';
+        document.getElementById('language-select').value = savedLang;
+        setLanguage(savedLang);
+
+        document.getElementById('language-select').addEventListener('change', e => setLanguage(e.target.value));
+
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function(e) {
+                e.preventDefault();
+                document.querySelector(this.getAttribute('href')).scrollIntoView({ behavior: 'smooth' });
+            });
+        });
+
+        const toggle = document.getElementById('theme-toggle');
+        if (localStorage.getItem('theme') === 'dark') {
+            document.body.setAttribute('data-theme', 'dark');
+            toggle.innerHTML = '<i class="fas fa-sun"></i>';
+        }
+        toggle.addEventListener('click', () => {
+            const isDark = document.body.getAttribute('data-theme') === 'dark';
+            document.body.setAttribute('data-theme', isDark ? 'light' : 'dark');
+            toggle.innerHTML = isDark ? '<i class="fas fa-moon"></i>' : '<i class="fas fa-sun"></i>';
+            localStorage.setItem('theme', isDark ? 'light' : 'dark');
+        });
+
+        document.getElementById('contact-form').addEventListener('submit', function(e) {
+            alert('Thank you! Your request has been submitted. Our team will contact you soon.');
+            this.reset();
+        });
+
+        const backToTop = document.getElementById('back-to-top');
+        window.addEventListener('scroll', () => {
+            backToTop.style.display = window.scrollY > 400 ? 'flex' : 'none';
+        });
+        backToTop.addEventListener('click', () => window.scrollTo({ top: 0, behavior: 'smooth' }));
+
+        const menuIcon = document.querySelector('.menu-icon');
+        const navLinks = document.querySelector('.nav-links');
+        menuIcon.addEventListener('click', () => {
+            navLinks.classList.toggle('active');
+            const icon = menuIcon.querySelector('i');
+            icon.classList.toggle('fa-bars');
+            icon.classList.toggle('fa-times');
+        });
+    </script>
+</body>
+</html>
